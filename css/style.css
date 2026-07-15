@@ -186,7 +186,7 @@ body.app-shell { padding-bottom: 84px; }
 .bottom-nav__fab { position: relative; top: -14px; }
 .bottom-nav__fab i { background: var(--c-green-dark); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lift); font-size: 1.2rem !important; }
 
-.page-head { padding: 1.6rem 0 0.5rem; }
+.page-head { padding: 1.6rem; }
 .page { padding-bottom: 2.5rem; }
 
 /* Auth pages */
