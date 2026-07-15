@@ -18,33 +18,47 @@ function wireLogout() {
     window.location.href = 'login.html';
   };
   document.getElementById('logoutBtn')?.addEventListener('click', handler);
-  document.getElementById('logoutBtnMobile')?.addEventListener('click', handler);
 }
 
-function wireBurger() {
+function wireDrawer() {
   const burger = document.getElementById('burgerBtn');
-  const menu = document.getElementById('mobileMenu');
-  if (burger && menu) {
-    burger.addEventListener('click', () => {
-      const isOpen = menu.classList.toggle('is-open');
-      burger.setAttribute('aria-expanded', String(isOpen));
-      burger.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-    });
-  }
+  const sidebar = document.getElementById('adminSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (!burger || !sidebar || !backdrop) return;
+
+  const open = () => {
+    sidebar.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
+  };
+  const close = () => {
+    sidebar.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  };
+
+  burger.addEventListener('click', open);
+  backdrop.addEventListener('click', close);
+  sidebar.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+}
+
+function displayUserIdentity(user) {
+  const initialsEl = document.getElementById('userInitials');
+  const nameEl = document.getElementById('userName');
+  if (!user) return;
+  if (initialsEl) initialsEl.textContent = `${(user.prenom || '?')[0]}${(user.nom || '?')[0]}`.toUpperCase();
+  if (nameEl) nameEl.textContent = `${user.prenom} ${user.nom}`;
 }
 
 /**
  * À appeler en haut de chaque page admin protégée. Vérifie la session ET le rôle admin.
  */
 async function initAppShell() {
-  document.body.classList.add('app-shell');
-  await Promise.all([
-    loadPartial('#site-header', 'partials/header.html'),
-    loadPartial('#bottom-nav-slot', 'partials/bottom-nav.html'),
-  ]);
+  document.body.classList.add('admin-shell');
+  await loadPartial('#site-header', 'partials/sidebar.html');
   highlightActiveNav();
   wireLogout();
-  wireBurger();
+  wireDrawer();
 
   try {
     const { user } = await apiGet('/users/me');
@@ -52,6 +66,7 @@ async function initAppShell() {
       window.location.href = 'login.html';
       return null;
     }
+    displayUserIdentity(user);
     return user;
   } catch (err) {
     return null; // apiGet redirige déjà vers login.html en cas de 401

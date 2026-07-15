@@ -4,29 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion admin — EcoKin</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background: var(--c-green-darker);">
-<div class="auth-wrap">
-  <div class="auth-card">
-    <div class="auth-card__logo"><i class="fa-solid fa-shield-halved"></i> EcoKin Admin</div>
-    <h1 style="font-size:1.4rem;">Espace administrateur</h1>
-    <p style="font-size:0.9rem;">Accès réservé à l'équipe de gestion EcoKin.</p>
+<body>
+<div class="auth-screen">
+  <div class="auth-screen__brand">
+    <div class="auth-screen__grid-deco" aria-hidden="true"></div>
+    <div class="auth-screen__brand-top">
+      <span class="admin-sidebar__brand-mark"><i class="fa-solid fa-leaf"></i></span>
+      EcoKin
+    </div>
+    <div class="auth-screen__brand-mid">
+      <h2>La gestion environnementale de Kinshasa, centralisée.</h2>
+      <p>Valide les signalements, modère les articles et pilote la carte de la ville depuis un seul espace.</p>
+    </div>
+    <div class="auth-screen__brand-foot">ESPACE ADMINISTRATEUR · ACCÈS RESTREINT</div>
+  </div>
 
-    <form id="loginForm" novalidate>
-      <div class="mb-3">
-        <label class="form-label" for="email">Email</label>
-        <input type="email" class="form-control" id="email" required autocomplete="email">
+  <div class="auth-screen__form-wrap">
+    <div class="auth-form">
+      <div class="auth-form__mobile-brand">
+        <span class="admin-sidebar__brand-mark" style="background:var(--accent);"><i class="fa-solid fa-leaf" style="color:white;"></i></span>
+        EcoKin
       </div>
-      <div class="mb-3">
-        <label class="form-label" for="password">Mot de passe</label>
-        <input type="password" class="form-control" id="password" required autocomplete="current-password">
-      </div>
-      <div id="formError" class="text-danger mb-2" style="font-size:0.88rem; display:none;"></div>
-      <button class="btn btn-primary btn-block" type="submit" id="submitBtn">Se connecter</button>
-    </form>
+      <h1>Connexion administrateur</h1>
+      <p>Accès réservé à l'équipe de gestion EcoKin.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="email">Email</label>
+          <input type="email" class="form-control" id="email" required autocomplete="email">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">Mot de passe</label>
+          <input type="password" class="form-control" id="password" required autocomplete="current-password">
+        </div>
+        <div id="formError" class="text-danger mb-2" style="font-size:0.85rem; display:none;"></div>
+        <button class="btn btn-primary btn-block" type="submit" id="submitBtn">Se connecter</button>
+      </form>
+    </div>
   </div>
 </div>
 

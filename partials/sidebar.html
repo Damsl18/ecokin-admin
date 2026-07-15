@@ -1,0 +1,40 @@
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<aside class="admin-sidebar" id="adminSidebar">
+  <div class="admin-sidebar__brand">
+    <span class="admin-sidebar__brand-mark"><i class="fa-solid fa-leaf"></i></span>
+    <div>EcoKin<small>Espace administrateur</small></div>
+  </div>
+
+  <nav class="admin-sidebar__nav" aria-label="Navigation principale">
+    <div class="admin-sidebar__section-label">Aperçu</div>
+    <a href="dashboard.html" data-nav="dashboard.html"><i class="fa-solid fa-gauge"></i> Tableau de bord</a>
+
+    <div class="admin-sidebar__section-label">Modération</div>
+    <a href="signalements.html" data-nav="signalements.html"><i class="fa-solid fa-triangle-exclamation"></i> Signalements</a>
+    <a href="articles.html" data-nav="articles.html"><i class="fa-solid fa-newspaper"></i> Articles</a>
+
+    <div class="admin-sidebar__section-label">Gestion</div>
+    <a href="utilisateurs.html" data-nav="utilisateurs.html"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+    <a href="carte.html" data-nav="carte.html"><i class="fa-solid fa-map-location-dot"></i> Carte</a>
+  </nav>
+
+  <div class="admin-sidebar__footer">
+    <div class="admin-sidebar__user">
+      <div class="admin-sidebar__avatar" id="userInitials">A</div>
+      <div>
+        <div class="admin-sidebar__user-name" id="userName">Administrateur</div>
+        <div class="admin-sidebar__user-role">Admin</div>
+      </div>
+    </div>
+    <button class="admin-sidebar__logout" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</button>
+  </div>
+</aside>
+
+<div class="admin-topbar-mobile">
+  <div class="admin-topbar-mobile__brand">
+    <span class="admin-sidebar__brand-mark" style="background:var(--accent);"><i class="fa-solid fa-leaf"></i></span>
+    EcoKin Admin
+  </div>
+  <button id="burgerBtn" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+</div>
