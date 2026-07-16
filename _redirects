@@ -1,2 +1,3 @@
 /api/*      https://ecokin-api.onrender.com/api/:splat      200
 /           /login.html  302
+/uploads/*  https://ecokin-api.onrender.com/uploads/:splat  200
