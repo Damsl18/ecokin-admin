@@ -168,7 +168,10 @@ async function loadReferenceSignalements() {
         radius: 6, color: '#2D6CDF', fillColor: '#2D6CDF', fillOpacity: 0.6, weight: 1.5,
       }).bindPopup(`<strong>${escapeHtml(s.titre || 'Signalement')}</strong>`).addTo(map);
     });
-  } catch (err) { /* silencieux : couche de référence uniquement */ }
+  } catch (err) {
+    console.error('Impossible de charger les signalements de référence sur la carte :', err);
+    showToast('Signalements de référence non chargés sur la carte.', 'error');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
