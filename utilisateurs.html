@@ -12,16 +12,19 @@
 <div id="site-header"></div>
 
 <main class="page">
-  <div class="container page-head">
-    <h1 style="font-size:1.5rem;">Utilisateurs</h1>
-    <p>Gère les comptes citoyens inscrits sur EcoKin.</p>
+  <div class="container page-head" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:0.8rem;">
+    <div>
+      <h1 style="font-size:1.5rem;">Utilisateurs</h1>
+      <p style="margin-bottom:0;">Gère les comptes citoyens inscrits sur EcoKin.</p>
+    </div>
+    <button class="btn btn-primary" id="newUserBtn" type="button"><i class="fa-solid fa-plus"></i> Nouvel utilisateur</button>
   </div>
 
   <div class="container">
     <table class="data-table">
-      <thead><tr><th>Nom</th><th>Email</th><th>Commune</th><th>Statut</th><th>Actions</th></tr></thead>
+      <thead><tr><th>Nom</th><th>Email</th><th>Commune</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr></thead>
       <tbody id="tableBody">
-        <tr><td colspan="5"><div class="spinner" style="margin:1rem auto;"></div></td></tr>
+        <tr><td colspan="6"><div class="spinner" style="margin:1rem auto;"></div></td></tr>
       </tbody>
     </table>
   </div>

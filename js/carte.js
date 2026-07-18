@@ -181,6 +181,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
   map.on('click', onMapClick);
 
+  // Sur mobile, le conteneur n'a parfois pas sa taille finale au moment de
+  // l'initialisation (barre d'adresse, police en chargement…) : Leaflet garde
+  // alors un calcul de taille faux et déborde de son cadre. On le force à se
+  // recalculer une fois la mise en page stabilisée, puis à chaque rotation/resize.
+  setTimeout(() => map.invalidateSize(), 200);
+  window.addEventListener('resize', () => map.invalidateSize());
+  window.addEventListener('orientationchange', () => setTimeout(() => map.invalidateSize(), 250));
+
   loadReferenceSignalements();
   loadPoints();
   loadZones();

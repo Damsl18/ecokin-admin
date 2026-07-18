@@ -3,6 +3,7 @@ let articlesCache = [];
 function actionButtons(a) {
   const btns = [];
   btns.push(`<button class="btn btn-outline btn-sm" onclick="viewArticle(${a.id})">Voir</button>`);
+  btns.push(`<button class="btn btn-outline btn-sm" onclick="openEditArticle(${a.id})">Modifier</button>`);
   if (a.statut === 'en_attente') {
     btns.push(`<button class="btn btn-primary btn-sm" onclick="changeStatut(${a.id}, 'publie')">Publier</button>`);
     btns.push(`<button class="btn btn-outline btn-sm text-danger" onclick="changeStatut(${a.id}, 'rejete')">Rejeter</button>`);
@@ -59,6 +60,78 @@ function viewArticle(id) {
 }
 function closeArticleModal() { document.getElementById('modalSlot').innerHTML = ''; }
 
+function articleFormModal({ title, a }) {
+  return `
+    <div class="modal-backdrop-custom" id="articleFormModal">
+      <div class="modal-box" style="max-width:640px;">
+        <h3 style="font-size:1.15rem;">${title}</h3>
+        <form id="articleForm">
+          <div class="mb-2">
+            <label class="form-label">Titre</label>
+            <input class="form-control" id="af_titre" value="${a ? escapeHtml(a.titre) : ''}" required maxlength="255">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Image de couverture ${a && a.cover_image_path ? '(laisser vide pour garder l\'actuelle)' : '(optionnelle)'}</label>
+            <input type="file" class="form-control" id="af_cover" accept="image/jpeg,image/png,image/webp">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Contenu</label>
+            <textarea class="form-control" id="af_contenu" rows="8" required>${a ? a.contenu : ''}</textarea>
+          </div>
+          <div id="articleFormError" class="text-danger mb-2" style="font-size:0.85rem; display:none;"></div>
+          <div class="d-flex gap-2 justify-content-end">
+            <button class="btn btn-ghost" type="button" onclick="closeArticleFormModal()">Annuler</button>
+            <button class="btn btn-primary" type="submit">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+}
+function closeArticleFormModal() { document.getElementById('modalSlot').innerHTML = ''; }
+
+function openNewArticle() {
+  document.getElementById('modalSlot').innerHTML = articleFormModal({ title: 'Nouvel article (publié directement)', a: null });
+  wireArticleForm(null);
+}
+
+function openEditArticle(id) {
+  const a = articlesCache.find((x) => x.id === id);
+  if (!a) return;
+  document.getElementById('modalSlot').innerHTML = articleFormModal({ title: 'Modifier l\'article', a });
+  wireArticleForm(a);
+}
+
+function wireArticleForm(existingArticle) {
+  const form = document.getElementById('articleForm');
+  const errorBox = document.getElementById('articleFormError');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+
+    const formData = new FormData();
+    formData.append('titre', document.getElementById('af_titre').value.trim());
+    formData.append('contenu', document.getElementById('af_contenu').value.trim());
+    const file = document.getElementById('af_cover').files[0];
+    if (file) formData.append('cover_image', file);
+
+    try {
+      if (existingArticle) {
+        await apiPut(`/articles/${existingArticle.id}`, formData, true);
+        showToast('Article mis à jour.', 'success');
+      } else {
+        await apiPost('/articles', formData, true);
+        showToast('Article créé et publié.', 'success');
+      }
+      closeArticleFormModal();
+      loadArticles();
+    } catch (err) {
+      errorBox.textContent = err.message;
+      errorBox.style.display = 'block';
+    }
+  });
+}
+
 async function changeStatut(id, statut) {
   try {
     await apiPatch(`/articles/${id}/statut`, { statut });
@@ -86,4 +159,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (params.get('statut')) document.getElementById('statutFilter').value = params.get('statut');
   loadArticles();
   document.getElementById('statutFilter').addEventListener('change', loadArticles);
+  document.getElementById('newArticleBtn').addEventListener('click', openNewArticle);
 });
