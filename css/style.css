@@ -165,7 +165,7 @@ body.admin-shell { min-height: 100vh; }
 main.page { min-height: 100vh; }
 @media (min-width: 992px) { main.page { margin-left: var(--sidebar-w); } }
 
-.page-head { padding: 1.8rem 0 1.2rem; }
+.page-head { padding: 1.8rem; }
 .page-head h1 { margin-bottom: 0.2rem; }
 .page-head p { margin-bottom: 0; font-size: 0.92rem; }
 
